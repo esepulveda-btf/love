@@ -150,6 +150,23 @@
             font-size: 60px;
             color: red;
         }
+        .heart-floating {
+            position: absolute;
+            font-size: 10px;
+            color: red;
+            opacity: 0.8;
+            animation: floatUp 5s linear infinite;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -186,6 +203,22 @@
                 modal.style.display = "none";
             }, 2000);
         }
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart-floating");
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw"; // Posición horizontal aleatoria
+            heart.style.animationDuration = (Math.random() * 2 + 3) + "s"; // Duración aleatoria
+            heart.style.fontSize = (Math.random() * 20 + 10) + "px"; // Tamaño aleatorio
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000); // Elimina el corazón después de 5 segundos
+        }
+
+        setInterval(createHeart, 500); // Crea un corazón cada 0.5 segundos
         function showLoveMessage() {
         	clearTimeout(0);
             let messages = ["Eres mi persona favorita ❤️", "Eres la mejor mi linda querida Vivi ❤️", "muchas gracias por estar ahi y por tu paciencia 🌹", "Eres mi razón de sonreír 😊", "Contigo todo es especial 💕", "Muchas gracias porque gracias a ti cada dia aprendo mas, eres mi motivación para aprender y me permite hacer cosas como esta ❤️", "Sii como este pequeño programa hecho con mucho amor para ti ❤️",  "Tu sonrisa es mi motivación, no hay nada que me haga más feliz que verte sonreír 💓", "muchas gracias por todo mi linda querida Vivi ❤️", "te quiero te quiero te quiero y nunca parare de decirlo, porque yo te quieroo con todo mi corazon ❤️", "Te mando el abrazote mas grande 🫂, el mas cariñoso y mas lleno de amor para ti, te quiero mi querida 🥰❤️, espero tengas una linda jornadita 🥰"];
