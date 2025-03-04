@@ -176,6 +176,7 @@
             document.getElementById("loveContainer").classList.remove("hidden");
         }
         function showNoOptionMessage() {
+            clearTimeout(0);
             let modal = document.getElementById('modal');
             modal.style.display = "block";
             setTimeout(() => {
@@ -183,6 +184,7 @@
             }, 2000);
         }
         function showLoveMessage() {
+        	clearTimeout(0);
             let messages = ["Eres mi persona favorita ❤️", "Eres la mejor mi linda querida Vivi ❤️", "muchas gracias por estar ahi y por tu paciencia 🌹", "Eres mi razón de sonreír 😊", "Contigo todo es especial 💕", "Muchas gracias porque gracias a ti cada dia aprendo mas, eres mi motivación para aprender y me permite hacer cosas como esta ❤️", "Tu sonrisa es mi motivación, no hay nada que me haga más feliz que verte sonreír 💓", "muchas gracias por todo mi linda querida Vivi ❤️", "te quiero te quiero te quiero y nunca parare de decirlo, porque yo te quieroo con todo mi corazon ❤️", "Te mando el abrazote mas grande 🫂, el mas cariñoso y mas lleno de amor para ti, te quiero mi querida 🥰❤️"];
             let modal = document.getElementById("loveModal");
             modal.innerHTML = `<div class='heart-icon'>❤️</div><div>${messages[i]}</div>`;
