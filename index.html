@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Animation</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffdde1;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .greeting {
+            font-size: 24px;
+            font-weight: bold;
+            color: #8b3a3a;
+            margin-bottom: 20px;
+            transition: opacity 1s ease-in-out;
+        }
+        .envelope {
+            position: relative;
+            width: 280px;
+            height: 180px;
+            background-color: #ffe6e6;
+            border: 4px solid #8b3a3a;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.5s ease-in-out;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            z-index: 3;
+        }
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            background-color: #d9534f;
+            clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+            transition: transform 0.5s ease-in-out;
+            border-bottom: 4px solid #8b3a3a;
+            z-index: 4;
+        }
+        .envelope.open .flap {
+            transform: rotateX(180deg);
+        }
+        .message {
+            font-size: 20px;
+            font-weight: bold;
+            color: #8b3a3a;
+            position: absolute;
+            bottom: 20px;
+            text-align: center;
+        }
+        .heart {
+            position: relative;
+            top: 20px;
+            width: 200px;
+            height: 180px;
+            background-color: red;
+            display: none;
+            z-index: 10;
+            clip-path: path('M 100 30 C 80 -10, 0 -10, 0 80 C 0 130, 100 170, 100 180 C 100 170, 200 130, 200 80 C 200 -10, 120 -10, 100 30 Z');
+            animation: heartbeat 1s infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1.5); }
+            50% { transform: scale(1.8); }
+            100% { transform: scale(1.5); }
+        }
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            z-index: 5;
+        }
+        .hidden {
+            display: none;
+        }
+        button {
+            font-size: 18px;
+            font-weight: bold;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+        #noButton {
+            background-color: #d9534f;
+            color: white;
+        }
+        #yesButton {
+            background-color: #5cb85c;
+            color: white;
+        }
+        #loveContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        #loveButton {
+            background-color: #ff4081;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            display: none;
+            margin-top: 20px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff3f3;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            color: #8b3a3a;
+            z-index: 50;
+            border: 3px solid #d9534f;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="greeting" id="greeting">Buenos días mi preciosa querida Vivi 😍</div>
+    <div class="envelope" id="envelope">
+        <div class="flap"></div>
+        <div class="message">¿Me quieres abrir?</div>
+    </div>
+    <div class="buttons" id="buttons">
+        <button id="yesButton" onclick="openLetter()">Sí</button>
+        <button id="noButton" onclick="showNoOptionMessage()">No</button>
+    </div>
+    <div class="heart hidden" id="heart">Te quiero mi querida Vivi 🌹</div>
+    <div id="loveContainer" class="hidden">
+        <button id="loveButton" onclick="showLoveMessage()">💖 Presióname 💖</button>
+    </div>
+    <div class="modal" id="modal">💔 ¡Upss! Esa opción no está disponible 💔</div>
+    <script>
+        function openLetter() {
+            document.getElementById("envelope").style.display = "none";
+            document.getElementById("buttons").style.display = "none";
+            document.getElementById("greeting").style.opacity = "0";
+            document.getElementById("heart").classList.remove("hidden");
+            document.getElementById("loveContainer").classList.remove("hidden");
+        }
+        function showNoOptionMessage() {
+            let modal = document.getElementById('modal');
+            modal.style.display = "block";
+            setTimeout(() => {
+                modal.style.display = "none";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
