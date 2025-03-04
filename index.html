@@ -50,9 +50,6 @@
             border-bottom: 4px solid #8b3a3a;
             z-index: 4;
         }
-        .envelope.open .flap {
-            transform: rotateX(180deg);
-        }
         .message {
             font-size: 20px;
             font-weight: bold;
@@ -118,7 +115,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 20px;
+            margin-top: 50px;
         }
         #loveButton {
             background-color: #ff4081;
@@ -126,7 +123,7 @@
             font-size: 20px;
             font-weight: bold;
             display: none;
-            margin-top: 20px;
+            margin-top: 50px;
         }
         .modal {
             display: none;
@@ -163,8 +160,11 @@
         <button id="loveButton" onclick="showLoveMessage()">💖 Presióname 💖</button>
     </div>
     <div class="modal" id="modal">💔 ¡Upss! Esa opción no está disponible 💔</div>
+    <div class="modal" id="loveModal" class="hidden"></div>
     <script>
+    	let i = 0
         function openLetter() {
+            document.getElementById("loveButton").style.display = "flex";
             document.getElementById("envelope").style.display = "none";
             document.getElementById("buttons").style.display = "none";
             document.getElementById("greeting").style.opacity = "0";
@@ -177,6 +177,19 @@
             setTimeout(() => {
                 modal.style.display = "none";
             }, 2000);
+        }
+        function showLoveMessage() {
+            let messages = ["Eres mi persona favorita ❤️", "Eres la mejor mi linda querida Vivi ❤️", "muchas gracias por estar ahi y por tu paciencia 🌹", "Eres mi razón de sonreír 😊", "Contigo todo es especial 💕", "Muchas gracias porque gracias a ti cada dia aprendo mas, eres mi motivación para aprender y me permite hacer cosas como esta ❤️", "Tu sonrisa es mi motivación, no hay nada que me haga más feliz que verte sonreír 💓", "muchas gracias por todo mi linda querida Vivi ❤️", "te quiero te quiero te quiero y nunca parare de decirlo, porque yo te quieroo con todo mi corazon ❤️", "Te mando el abrazote mas grande 🫂, el mas cariñoso y mas lleno de amor para ti, te quiero mi querida 🥰❤️"];
+            let modal = document.getElementById("loveModal");
+            modal.innerText = messages[i];
+            i++
+            if (i == 10) {
+            	i = 0
+            }
+            modal.style.display = "block";
+            setTimeout(() => {
+                modal.style.display = "none";
+            }, 10000);
         }
     </script>
 </body>
