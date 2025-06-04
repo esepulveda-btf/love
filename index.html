@@ -1,165 +1,183 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Para el amor de mi vida</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Una carta para ti</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      background: #ffeaea;
+      background: #fff0f5;
       font-family: 'Segoe UI', sans-serif;
-      color: #4d3b3b;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
+      height: 100vh;
+      overflow: hidden;
     }
 
-    .container {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      gap: 30px;
-      padding: 40px;
-      background: #fff0f0;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-      max-width: 90vw;
-    }
-
-    .message {
-      flex: 1 1 300px;
-      max-width: 400px;
-    }
-
-    .message h2 {
-      font-size: 22px;
-      margin-bottom: 10px;
-    }
-
-    .message p {
-      margin: 10px 0;
-      font-size: 16px;
-      line-height: 1.5;
-    }
-
-    .heart-tree {
+    .envelope {
       position: relative;
       width: 300px;
-      height: 400px;
-      animation: heartbeat 1.5s infinite ease-in-out;
-      flex-shrink: 0;
-    }
-
-    @keyframes heartbeat {
-      0%, 100% {
-        transform: scale(1);
-      }
-      25% {
-        transform: scale(1.03);
-      }
-      50% {
-        transform: scale(1);
-      }
-      75% {
-        transform: scale(1.04);
-      }
-    }
-
-    .leaf {
-      position: absolute;
-      font-size: 16px;
-      transform: translate(-50%, -50%);
-      opacity: 0;
-      animation: appear 2s forwards;
-    }
-
-    .trunk {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 40px;
-      height: 150px;
-      background-color: #4e342e;
-      transform: translateX(-50%);
+      height: 200px;
+      background: #fff;
+      border: 2px solid #d46a92;
       border-radius: 10px;
-      z-index: 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.5s ease;
+      z-index: 2;
     }
 
-    .falling {
+    .envelope:hover {
+      transform: scale(1.05);
+    }
+
+    .flap {
       position: absolute;
-      top: -20px;
-      animation: fall 8s linear infinite;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: #d46a92;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top center;
+      z-index: 2;
+      transition: transform 0.6s ease;
     }
 
-    @keyframes fall {
-      to {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-      }
+    .letter {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #fff;
+      padding: 20px;
+      box-sizing: border-box;
+      transform: translateY(0);
+      transition: transform 0.6s ease;
+      z-index: 99;
+      text-align: center;
     }
 
-    @keyframes appear {
-      to {
+    .envelope.open .flap {
+      transform: rotateX(-120deg);
+    }
+
+    .envelope.open .letter {
+      transform: translateY(-100%);
+    }
+
+    .invite {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #d46a92;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 1s ease 0.5s;
+    }
+
+    .envelope.open .invite {
+      opacity: 1;
+    }
+
+    .confirm-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #d46a92;
+      border: none;
+      border-radius: 20px;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 1s ease 1s;
+    }
+
+    .envelope.open .confirm-button {
+      opacity: 1;
+    }
+
+    .flowers {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .flower {
+      position: absolute;
+      font-size: 24px;
+      animation: float 8s linear infinite;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(1) rotate(0deg);
         opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.5) rotate(360deg);
+        opacity: 0;
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="message">
-      <h2>Mi querida Vivi:</h2>
-      <p>Quiero invitarte a una salida, solo tú y yo.<br>
-Un paseo, una conversación, una tarde para sonreir y para pasarlo genial.<br>
-¿Aceptas acompañarme mañana en la tarde y seguir creando momentos juntos?<br>
-— Te quiero mucho mi querida, con todo mi cariño, Esteban</p>
-    </div>
+  <div class="flowers" id="flowers"></div>
 
-    <div class="heart-tree" id="tree">
-      <div class="trunk"></div>
+  <div id="openText" style="position: absolute; top: calc(50% - 130px); left: 50%; transform: translateX(-50%); font-size: 20px; font-weight: bold; color: #d46a92; z-index: 3; transition: opacity 0.5s ease;">Ábreme 💌</div>
+  <div class="envelope" onclick="this.classList.toggle('open'); document.getElementById('openText').style.opacity = '0'; showBurst();">
+    <div class="flap"></div>
+    <div class="letter">
+      <p>Hola mi querida Vivi,</p>
+      <p>me hace muy feliz tu presencia, y quiero compartir contigo bellos momentos...</p>
+      <p class="invite">¿Vamos al cine mañana por la tarde? 🎬🍿</p>
+      <button class="confirm-button" onclick="event.stopPropagation(); alert('¡Me harías muy feliz! 💖')">Aceptar invitación</button>
     </div>
   </div>
 
   <script>
-    const tree = document.getElementById("tree");
-    const centerX = 150;
-    const centerY = 180;
-    const scale = 10;
-    const heartCount = 6000;
+  const flowerContainer = document.getElementById('flowers');
+  const emojis = ['🌸','🌷','🌼','💮','🌺','💖','💘','💝','💗','❤️'];
 
-    for (let i = 0; i < heartCount; i++) {
-      const t = Math.random() * 2 * Math.PI;
-      const r = Math.sqrt(Math.random());
-      const x = r * 16 * Math.pow(Math.sin(t), 3);
-      const y = r * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+  function createFlower() {
+    const flower = document.createElement('div');
+    flower.classList.add('flower');
+    flower.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    flower.style.left = `${Math.random() * window.innerWidth}px`;
+    flower.style.top = '100vh';
+    flower.style.fontSize = `${Math.random() * 12 + 24}px`;
+    flower.style.color = '#d46a92';
+    flower.style.animationDuration = `${Math.random() * 5 + 5}s`;
+    flowerContainer.appendChild(flower);
 
-      const leaf = document.createElement("div");
-      leaf.className = "leaf";
-      leaf.textContent = ['💗','💖','💕','💘','💓'][Math.floor(Math.random()*5)];
-      leaf.style.left = `${centerX + x * scale}px`;
-      leaf.style.top = `${centerY - y * scale}px`;
-      leaf.style.animationDelay = `${Math.random() * 3}s`;
-      tree.appendChild(leaf);
+    setTimeout(() => flower.remove(), 10000);
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setInterval(createFlower, 300);
+  });
+function showBurst() {
+    for (let i = 0; i < 20; i++) {
+      const heart = document.createElement('div');
+      heart.classList.add('flower');
+      heart.textContent = '❤️';
+      heart.style.left = `${Math.random() * window.innerWidth}px`;
+      heart.style.top = `${Math.random() * window.innerHeight}px`;
+      heart.style.fontSize = `${Math.random() * 20 + 30}px`;
+      heart.style.animationDuration = `${Math.random() * 2 + 2}s`;
+      heart.style.color = '#d46a92';
+      flowerContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 3000);
     }
-
-    function createFallingHeart() {
-      const heart = document.createElement("div");
-      heart.classList.add("falling");
-      heart.textContent = "💗";
-      heart.style.left = Math.random() * window.innerWidth + "px";
-      heart.style.fontSize = Math.random() * 10 + 14 + "px";
-      document.body.appendChild(heart);
-
-      setTimeout(() => heart.remove(), 8000);
-    }
-
-    setInterval(createFallingHeart, 400);
-  </script>
+  }
+</script>
 </body>
 </html>
